@@ -331,8 +331,7 @@ namespace olRW
         private void txtFolderPath_MouseDoubleClick(object sender, MouseButtonEventArgs e)
         {
             FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.Description = "Please select folder";
-            fbd.RootFolder = Environment.SpecialFolder.Desktop;
+            fbd.Description = "please select folder";
             fbd.ShowNewFolderButton = true;
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -340,5 +339,32 @@ namespace olRW
             }
         }
 
+        private void txtFilename_MouseDoubleClick(object sender, MouseButtonEventArgs e)
+        {
+            System.Windows.Forms.OpenFileDialog ofd = new System.Windows.Forms.OpenFileDialog();
+            ofd.Title = "please select file";
+            if (ofd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                txtFilename.Text = System.IO.Path.GetFileName( ofd.FileName );
+            }
+        }
+
+        private void Grid_PreviewDragOver(object sender, System.Windows.DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(System.Windows.DataFormats.FileDrop, true))
+            {
+                e.Effects = System.Windows.DragDropEffects.Copy;
+            }
+            else e.Effects = System.Windows.DragDropEffects.None;
+            e.Handled = true;
+        }
+
+        private void Grid_Drop(object sender, System.Windows.DragEventArgs e)
+        {
+            var dropFiles = e.Data.GetData(System.Windows.DataFormats.FileDrop) as string [];
+            if (dropFiles == null) return;
+            txtFolderPath.Text = System.IO.Path.GetDirectoryName(dropFiles[0]);
+            txtFilename.Text = System.IO.Path.GetFileName(dropFiles[0]);
+        }
     }
 }
