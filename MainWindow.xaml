@@ -1,0 +1,50 @@
+﻿<Window x:Class="olRW.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:olRW"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="182" Width="634"    Loaded="Page_LoadedAsync" Closed="Window_Closed">
+
+
+    <Grid Margin="0,0,23,9">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+        <ComboBox HorizontalAlignment="Left" Margin="130,11,0,0" VerticalAlignment="Top" Width="100" Name="cmbPort">
+            <ComboBoxItem>COM1</ComboBoxItem>
+            <ComboBoxItem>COM2</ComboBoxItem>
+            <ComboBoxItem>COM3</ComboBoxItem>
+            <ComboBoxItem>COM4</ComboBoxItem>
+            <ComboBoxItem>COM5</ComboBoxItem>
+            <ComboBoxItem>COM6</ComboBoxItem>
+            <ComboBoxItem>COM7</ComboBoxItem>
+            <ComboBoxItem>COM8</ComboBoxItem>
+            <ComboBoxItem>COM9</ComboBoxItem>
+        </ComboBox>
+        <TextBlock TextAlignment="Right" HorizontalAlignment="Left" Margin="27,18,0,0" Text="SerialPort :" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <ComboBox HorizontalAlignment="Left" Margin="370,11,0,0" VerticalAlignment="Top" Text="38400" Width="100" Name="cmbBaud">
+            <ComboBoxItem>9600</ComboBoxItem>
+            <ComboBoxItem>19200</ComboBoxItem>
+            <ComboBoxItem IsEnabled="true">38400</ComboBoxItem>
+            <ComboBoxItem>57600</ComboBoxItem>
+            <ComboBoxItem>115200</ComboBoxItem>
+        </ComboBox>
+        <TextBlock TextAlignment="Right" HorizontalAlignment="Left" Margin="260,16,0,0" Text="BaudRate :" TextWrapping="Wrap" VerticalAlignment="Top"  Width="100" />
+        <Button Content="Connect" Name="SerConnect" HorizontalAlignment="Left" Margin="490,11,0,0" VerticalAlignment="Top" Width="100" Click="SerConnect_ClickAsync"/>
+        <Button Content="Write" Name="SerWrite" HorizontalAlignment="Left" Margin="490,92,0,0" VerticalAlignment="Top" Width="100" Click="SerWrite_ClickAsync"/>
+        <Button Content="Read" Name="SerRead" HorizontalAlignment="Left" Margin="490,60,0,0" VerticalAlignment="Top" Width="100" Click="SerRead_ClickAsync"/>
+
+        <TextBlock TextAlignment="Right" HorizontalAlignment="Left" Margin="25,60,0,0" Text="Folder :" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <TextBox HorizontalAlignment="Left" Margin="130,60,0,0" Name="txtFolderPath" Text="double click here" VerticalAlignment="Top" Width="340" MouseDoubleClick="txtFolderPath_MouseDoubleClick" />
+
+        <TextBlock TextAlignment="Right" HorizontalAlignment="Left" Margin="27,92,0,0" Text="Filename :" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" />
+
+        <TextBox HorizontalAlignment="Left" Margin="130,92,0,0" Name="txtFilename" Text="AG.jpg" VerticalAlignment="Top" Width="340"/>
+
+        <TextBlock HorizontalAlignment="Left" Margin="130,116,0,0"  Name="txbStatus"  TextWrapping="Wrap" VerticalAlignment="Top" Width="460" />
+
+    </Grid>
+
+</Window>
