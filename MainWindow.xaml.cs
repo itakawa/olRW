@@ -192,6 +192,7 @@ namespace olRW
         private void SerConnect_ClickAsync(object sender, RoutedEventArgs e)
         {
             Comm.Open(cmbPort.Text, cmbBaud.Text, "8", "1", "None", "None", "1000", "1024");
+            txbStatus.Text = cmbPort.Text + ": port opend.";
         }
 
         private async void SerRead_ClickAsync(object sender, RoutedEventArgs e)
@@ -252,7 +253,7 @@ namespace olRW
             }
         }
 
-        private async void WaitPrompt()
+        private async Task WaitPrompt()
         {
             RxData.Clear();
             for (Comm.SetEos(">"); Comm.GetEos() == ">";)
@@ -288,12 +289,12 @@ namespace olRW
                 return;
             }
 
-            WaitPrompt();
+            await WaitPrompt();
 
-            Comm.Send(Encoding.ASCII.GetBytes("new " + txtFilename.Text + "\n"));
+            Comm.Send(Encoding.ASCII.GetBytes("new " + txtFilename.Text + "\r\n"));
             txbStatus.Text = "new " + txtFilename.Text;
 
-            WaitPrompt();
+            await WaitPrompt();
 
             Comm.Send(Encoding.ASCII.GetBytes("append " + txtFilename.Text + "\r\n"));
             txbStatus.Text = "apppend" + txtFilename.Text;
@@ -323,7 +324,7 @@ namespace olRW
 
             txbStatus.Text = "write datas";
 
-            WaitPrompt();
+            await WaitPrompt();
 
             txbStatus.Text = "file write done";
         }
