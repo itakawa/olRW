@@ -58,11 +58,12 @@ namespace olRW
             Comm.Parity = (Parity)Enum.Parse(typeof(Parity), parity);
             Comm.Handshake = (Handshake)Enum.Parse(typeof(Handshake), handshake);
             Comm.WriteTimeout = Convert.ToInt16(timeout);
-
+            Comm.WriteBufferSize = 65536;
+            Comm.ReadBufferSize = 65536;
             try
             {
                 IdxRxBuf = 0;
-                RxBuf = new byte[Convert.ToInt16(bufsize)];
+                RxBuf = new byte[Convert.ToInt32(bufsize)];
                 Comm.Open();
                 Continuation = true;
                 RxThread = new Thread(ThreadReceive);
@@ -70,7 +71,7 @@ namespace olRW
             }
             catch (System.Exception)
             {
-                return false;
+                throw new IOException("Open failed.");
             }
             return true;
         }
@@ -191,7 +192,7 @@ namespace olRW
 
         private void SerConnect_ClickAsync(object sender, RoutedEventArgs e)
         {
-            Comm.Open(cmbPort.Text, cmbBaud.Text, "8", "1", "None", "None", "1000", "1024");
+            Comm.Open(cmbPort.Text, cmbBaud.Text, "8", "1", "None", "None", "1000", "65536");
             txbStatus.Text = cmbPort.Text + ": port opend.";
         }
 
@@ -312,7 +313,7 @@ namespace olRW
                     Comm.Send(Encoding.ASCII.GetBytes("\n"));
                     sb.Clear();
                     txbStatus.Text = string.Format("Remain:{0}/{1}({2}%)", ii, buf.Length, ii * 100 / buf.Length);
-                    await Task.Delay(5);
+                    await Task.Delay(50);
                 }
             }
             if( sb.Length != 0 )
@@ -366,6 +367,53 @@ namespace olRW
             if (dropFiles == null) return;
             txtFolderPath.Text = System.IO.Path.GetDirectoryName(dropFiles[0]);
             txtFilename.Text = System.IO.Path.GetFileName(dropFiles[0]);
+        }
+
+        private void SerConvert_Click(object sender, RoutedEventArgs e)
+        {
+            byte[] buf;
+            string filepath = txtFolderPath.Text + "\\" + txtFilename.Text;
+
+            try
+            {
+                using (var fs = new FileStream(filepath, FileMode.Open, FileAccess.Read))
+                {
+                    buf = new byte[fs.Length];
+                    fs.Read(buf, 0, buf.Length);
+                }
+            }
+            catch (Exception ex)
+            {
+                txbStatus.Text = "not found file or folder.";
+                return;
+            }
+
+            string content = System.Text.Encoding.ASCII.GetString(buf);
+            content = content.Replace("\r", "");
+            content = content.Replace("\n", "");
+            content = content.Replace(">", "");
+
+            filepath = txtFolderPath.Text + "\\" + "converted_" + txtFilename.Text;
+            using (var fs = new FileStream(filepath, FileMode.Create, FileAccess.Write))
+            {
+                byte[] data = new byte[] { 0x00 };
+                for (int ii = 0; ii < content.Length; ii += 2)
+                {
+                    try
+                    {
+                        data[0] = Convert.ToByte(content.Substring(ii, 2), 16);
+                        fs.Write(data, 0, data.Length);
+                    }
+                    catch (Exception ex)
+                    {
+                        txbStatus.Text = ex.ToString();
+                        break;
+                    }
+                    txbStatus.Text = string.Format("Remain:{0}/{1}({2}%)", ii, content.Length, ii * 100 / content.Length);
+                }
+                fs.Close();
+                txbStatus.Text = "convert operation complete.";
+            }
         }
     }
 }

@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:olRW"
         mc:Ignorable="d" AllowDrop="True"
-        Title="olRW" Height="182" Width="634"    Loaded="Page_LoadedAsync" Closed="Window_Closed">
+        Title="olRW" Height="167" Width="634"    Loaded="Page_LoadedAsync" Closed="Window_Closed">
 
 
-    <Grid Margin="0,0,23,9" PreviewDragOver="Grid_PreviewDragOver" Drop="Grid_Drop">
+    <Grid Margin="0,0,23,-1" PreviewDragOver="Grid_PreviewDragOver" Drop="Grid_Drop">
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
         </Grid.ColumnDefinitions>
@@ -33,17 +33,19 @@
         </ComboBox>
         <TextBlock TextAlignment="Right" HorizontalAlignment="Left" Margin="260,16,0,0" Text="BaudRate :" TextWrapping="Wrap" VerticalAlignment="Top"  Width="100" />
         <Button Content="Connect" Name="SerConnect" HorizontalAlignment="Left" Margin="490,11,0,0" VerticalAlignment="Top" Width="100" Click="SerConnect_ClickAsync"/>
-        <Button Content="Write" Name="SerWrite" HorizontalAlignment="Left" Margin="490,92,0,0" VerticalAlignment="Top" Width="100" Click="SerWrite_ClickAsync"/>
-        <Button Content="Read" Name="SerRead" HorizontalAlignment="Left" Margin="490,60,0,0" VerticalAlignment="Top" Width="100" Click="SerRead_ClickAsync"/>
+        <Button Content="Write" Name="SerWrite" HorizontalAlignment="Left" Margin="490,95,0,0" VerticalAlignment="Top" Width="100" Click="SerWrite_ClickAsync"/>
+        <Button Content="Read" Name="SerRead" HorizontalAlignment="Left" Margin="490,67,0,0" VerticalAlignment="Top" Width="100" Click="SerRead_ClickAsync"/>
 
-        <TextBlock TextAlignment="Right" HorizontalAlignment="Left" Margin="25,60,0,0" Text="Folder :" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
-        <TextBox HorizontalAlignment="Left" Margin="130,60,0,0" Name="txtFolderPath" Text="double click here" VerticalAlignment="Top" Width="340" MouseDoubleClick="txtFolderPath_MouseDoubleClick" />
+        <TextBlock TextAlignment="Right" HorizontalAlignment="Left" Margin="25,51,0,0" Text="Folder :" TextWrapping="Wrap" VerticalAlignment="Top" Width="100"/>
+        <TextBox HorizontalAlignment="Left" Margin="130,50,0,0" Name="txtFolderPath" Text="double click here" VerticalAlignment="Top" Width="340" MouseDoubleClick="txtFolderPath_MouseDoubleClick" />
 
-        <TextBlock TextAlignment="Right" HorizontalAlignment="Left" Margin="27,92,0,0" Text="Filename :" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" />
+        <TextBlock TextAlignment="Right" HorizontalAlignment="Left" Margin="27,78,0,0" Text="Filename :" TextWrapping="Wrap" VerticalAlignment="Top" Width="100" />
 
-        <TextBox HorizontalAlignment="Left" Margin="130,92,0,0" Name="txtFilename"  Text="double click here" VerticalAlignment="Top" Width="340" MouseDoubleClick="txtFilename_MouseDoubleClick"/>
+        <TextBox HorizontalAlignment="Left" Margin="132,79,0,0" Name="txtFilename"  Text="double click here" VerticalAlignment="Top" Width="340" MouseDoubleClick="txtFilename_MouseDoubleClick"/>
 
-        <TextBlock HorizontalAlignment="Left" Margin="130,116,0,0"  Name="txbStatus"  TextWrapping="Wrap" VerticalAlignment="Top" Width="460" />
+        <TextBlock HorizontalAlignment="Left" Margin="130,97,0,0"  Name="txbStatus"  TextWrapping="Wrap" VerticalAlignment="Top" Width="340" />
+
+        <Button Content="Convert" x:Name="SerConvert" HorizontalAlignment="Left" Margin="490,38,0,0" VerticalAlignment="Top" Width="100" Click="SerConvert_Click"/>
 
     </Grid>
 
